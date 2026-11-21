@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coen Lyte | IT & Aspiring Electrical Engineer</title>
+<meta name="description" content="Portfolio of an IT student with a Computer Engineering concentration, aspiring Electrical Engineer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#ff7a1a; --orange-2:#ffa552; --orange-dark:#d65a00;
+    --bg:#0d0d0f; --bg-2:#151518; --card:#1b1b20; --line:#2a2a31;
+    --text:#f3f3f3; --muted:#a8a8b3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,.logo{font-family:'Orbitron',sans-serif}
+
+  /* ---------- Circuit canvas ---------- */
+  #circuit{position:absolute;inset:0;z-index:0;pointer-events:none}
+
+  /* ---------- Nav ---------- */
+  nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;
+      padding:1rem 6%;background:rgba(13,13,15,.75);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:.3s}
+  .logo{font-size:1.3rem;font-weight:900;color:var(--orange)}
+  .logo span{color:var(--text)}
+  nav ul{display:flex;gap:2rem;list-style:none}
+  nav ul a{font-size:.9rem;color:var(--muted);position:relative;transition:.3s}
+  nav ul a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--orange);transition:.3s}
+  nav ul a:hover{color:var(--text)} nav ul a:hover::after{width:100%}
+  .burger{display:none;background:none;border:0;color:var(--orange);font-size:1.6rem;cursor:pointer}
+
+  /* ---------- Hero ---------- */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:0 6%;gap:4rem;position:relative;overflow:hidden;
+        background:radial-gradient(circle at 75% 45%,#ffa552 0%,#ff7a1a 40%,#e85d00 100%);color:#111}
+  .hero>*:not(canvas){position:relative;z-index:1}
+  .hero .scroll-hint{position:absolute}
+  .hero-text{flex:1.3}
+  .hello{color:#3a1800;font-weight:600;letter-spacing:3px;text-transform:uppercase;font-size:.85rem}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.1;margin:.6rem 0}
+  .hero h1 .accent{color:#111;text-shadow:0 4px 0 rgba(255,255,255,.25)}
+  .typed{font-size:clamp(1.1rem,2.4vw,1.5rem);color:#3a1800;min-height:2.2rem}
+  .typed span{color:#fff;font-weight:600}
+  .cursor{display:inline-block;width:3px;background:#111;margin-left:3px;animation:blink 1s infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero p.lead{max-width:560px;color:rgba(0,0,0,.78);font-weight:500;margin:1.2rem 0 2rem}
+  .btns{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn{padding:.85rem 1.8rem;border-radius:50px;font-weight:600;transition:.3s;border:2px solid var(--orange)}
+  .btn.primary{background:var(--orange);color:#111}
+  .hero .btn.primary{background:#111;color:var(--orange-2);border-color:#111}
+  .hero .btn.primary:hover{background:#222;color:#ffb36b;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+  .hero .btn.ghost{border-color:#111;color:#111}
+  .hero .btn.ghost:hover{background:rgba(0,0,0,.1)}
+  .btn.primary:hover{background:var(--orange-2);transform:translateY(-3px);box-shadow:0 10px 25px rgba(255,122,26,.35)}
+  .btn.ghost:hover{background:rgba(255,122,26,.12);transform:translateY(-3px)}
+
+  /* Animated chip / avatar */
+  .hero-visual{flex:1;display:flex;justify-content:center}
+  .chip{position:relative;width:300px;height:300px}
+  .chip .core{position:absolute;inset:20%;border-radius:24px;background:linear-gradient(145deg,#232329,#141417);
+      border:2px solid #111;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 0 40px rgba(0,0,0,.35),inset 0 0 30px rgba(255,122,26,.15);animation:pulse 3s ease-in-out infinite}
+  .chip .core .initials{font-family:'Orbitron';font-size:3.4rem;font-weight:900;color:var(--orange)}
+  /* Replace the initials with a photo: <img src="me.jpg" alt="..."> */
+  .chip .core img{width:100%;height:100%;object-fit:cover;border-radius:22px}
+  @keyframes pulse{50%{box-shadow:0 0 70px rgba(255,255,255,.45),inset 0 0 30px rgba(255,122,26,.3)}}
+  .pin{position:absolute;background:#111;border-radius:2px;opacity:.8}
+  .ring{position:absolute;inset:0;border:2px dashed rgba(0,0,0,.35);border-radius:50%;animation:spin 20s linear infinite}
+  .ring.r2{inset:25px;border-style:dotted;animation-direction:reverse;animation-duration:14s}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:#3a1800;font-size:.8rem;
+      display:flex;flex-direction:column;align-items:center;gap:.4rem}
+  .scroll-hint .mouse{width:22px;height:36px;border:2px solid #111;border-radius:12px;position:relative}
+  .scroll-hint .mouse::after{content:'';position:absolute;top:6px;left:50%;width:4px;height:8px;background:#111;
+      border-radius:2px;transform:translateX(-50%);animation:wheel 1.6s infinite}
+  @keyframes wheel{to{transform:translate(-50%,12px);opacity:0}}
+
+  /* ---------- Sections ---------- */
+  section{padding:6rem 6%}
+  .section-title{text-align:center;margin-bottom:3.5rem}
+  .section-title h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+  .section-title h2 span{color:var(--orange)}
+  .section-title .bar{width:70px;height:4px;background:var(--orange);margin:.8rem auto 0;border-radius:4px;position:relative;overflow:hidden}
+  .section-title .bar::after{content:'';position:absolute;inset:0;width:20px;background:#fff;animation:slide 2s infinite}
+  @keyframes slide{from{transform:translateX(-20px)}to{transform:translateX(70px)}}
+  .alt{background:linear-gradient(160deg,#ff8a2a 0%,#ff7a1a 50%,#ef6400 100%);color:#111}
+  .alt .section-title h2{color:#111}
+  .alt .section-title h2 span{color:#fff}
+  .alt .section-title .bar{background:#111}
+  .alt .about p{color:rgba(0,0,0,.8)}
+  .alt .about p strong{color:#000}
+  .alt .stat,.alt .skill-group,.alt .front{box-shadow:0 12px 30px rgba(0,0,0,.25);border-color:#2a2a31;color:var(--text)}
+  .alt .stat:hover{border-color:#111}
+  .alt .pills span{background:#111;color:var(--orange-2)}
+
+  /* Reveal on scroll */
+  .reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.show{opacity:1;transform:none}
+
+  /* ---------- About ---------- */
+  .about{display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:center;max-width:1100px;margin:auto}
+  .about p{color:var(--muted);margin-bottom:1rem}
+  .about p strong{color:var(--text)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.5rem;text-align:center;transition:.3s}
+  .stat:hover{border-color:var(--orange);transform:translateY(-5px)}
+  .stat .num{font-family:'Orbitron';font-size:2rem;color:var(--orange);font-weight:700}
+  .stat .lbl{font-size:.85rem;color:var(--muted)}
+
+  /* ---------- Education timeline ---------- */
+  .timeline{position:relative;max-width:900px;margin:auto}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:3px;background:linear-gradient(var(--orange),transparent);transform:translateX(-50%)}
+  .t-item{position:relative;width:50%;padding:0 2.5rem 3rem}
+  .t-item:nth-child(odd){left:0;text-align:right}
+  .t-item:nth-child(even){left:50%}
+  .t-item::before{content:'';position:absolute;top:8px;width:18px;height:18px;background:var(--bg);border:3px solid var(--orange);border-radius:50%;
+      box-shadow:0 0 0 0 rgba(255,122,26,.6);animation:ping 2s infinite}
+  .t-item:nth-child(odd)::before{right:-9px} .t-item:nth-child(even)::before{left:-9px}
+  @keyframes ping{70%{box-shadow:0 0 0 14px rgba(255,122,26,0)}100%{box-shadow:0 0 0 0 rgba(255,122,26,0)}}
+  .t-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem;transition:.3s}
+  .t-card:hover{border-color:var(--orange);box-shadow:0 10px 30px rgba(255,122,26,.15)}
+  .t-card .date{color:var(--orange);font-weight:600;font-size:.85rem}
+  .t-card h3{font-size:1.15rem;margin:.4rem 0}
+  .t-card .school{color:var(--text);font-weight:600}
+  .t-card p{color:var(--muted);font-size:.92rem;margin-top:.4rem}
+  .tag{display:inline-block;margin-top:.7rem;padding:.25rem .8rem;border-radius:20px;font-size:.75rem;background:rgba(255,122,26,.12);color:var(--orange-2);border:1px solid rgba(255,122,26,.3)}
+
+  /* ---------- Skills ---------- */
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1100px;margin:auto}
+  .skill-group{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.8rem}
+  .skill-group h3{font-size:1rem;color:var(--orange);margin-bottom:1.2rem}
+  .skill{margin-bottom:1rem}
+  .skill .row{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.35rem}
+  .meter{height:8px;background:#26262c;border-radius:8px;overflow:hidden}
+  .meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange-dark),var(--orange-2));border-radius:8px;transition:width 1.6s cubic-bezier(.2,.7,.2,1)}
+
+  /* ---------- Experience / Projects ---------- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;max-width:1100px;margin:auto}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:.35s}
+  .card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:.4s}
+  .card:hover{transform:translateY(-8px);border-color:rgba(255,122,26,.5)}
+  .card:hover::before{transform:scaleX(1)}
+  .card .icon{font-size:2rem;margin-bottom:1rem}
+  .card h3{font-size:1.1rem;margin-bottom:.3rem}
+  .card .meta{color:var(--orange-2);font-size:.85rem;margin-bottom:.8rem}
+  .card p,.card li{color:var(--muted);font-size:.92rem}
+  .card ul{padding-left:1.1rem}
+  .pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+  .pills span{font-size:.72rem;padding:.2rem .6rem;border-radius:10px;background:#26262c;color:var(--muted)}
+
+  /* ---------- Hobbies ---------- */
+  .hobbies{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:auto}
+  .hobby{perspective:1000px;height:220px;cursor:pointer}
+  .hobby-inner{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
+  .hobby:hover .hobby-inner,.hobby.flip .hobby-inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;
+        align-items:center;justify-content:center;padding:1.4rem;text-align:center;border:1px solid var(--line)}
+  .front{background:var(--card)}
+  .front .emoji{font-size:3rem;margin-bottom:.8rem;animation:bob 3s ease-in-out infinite}
+  .hobby:nth-child(2n) .emoji{animation-delay:.5s} .hobby:nth-child(3n) .emoji{animation-delay:1s}
+  @keyframes bob{50%{transform:translateY(-8px)}}
+  .front h3{font-size:.95rem}
+  .back{background:#111;color:var(--orange-2);border-color:var(--orange)!important;transform:rotateY(180deg)}
+  .back h3{font-size:.95rem;margin-bottom:.5rem}
+  .back p{font-size:.85rem;font-weight:500}
+
+  /* ---------- Contact ---------- */
+  .contact{max-width:700px;margin:auto;text-align:center}
+  .contact p{color:var(--muted);margin-bottom:2rem}
+  .socials{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+  .socials a{width:52px;height:52px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;transition:.3s}
+  .socials a:hover{border-color:var(--orange);background:rgba(255,122,26,.12);transform:translateY(-4px) rotate(8deg)}
+  .socials svg{width:22px;height:22px;fill:var(--orange)}
+
+  footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+  footer span{color:var(--orange)}
+
+  /* Progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;background:var(--orange);z-index:200;width:0}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:900px){
+    .hero{flex-direction:column-reverse;justify-content:center;text-align:center;padding-top:6rem}
+    .hero p.lead{margin-inline:auto} .btns{justify-content:center}
+    .chip{width:220px;height:220px}
+    .about{grid-template-columns:1fr}
+    .hobbies{grid-template-columns:repeat(2,1fr)}
+    .timeline::before{left:10px}
+    .t-item,.t-item:nth-child(even){width:100%;left:0;text-align:left;padding:0 0 2.5rem 2.5rem}
+    .t-item:nth-child(odd)::before,.t-item:nth-child(even)::before{left:1px;right:auto}
+    nav ul{position:fixed;top:64px;right:-100%;flex-direction:column;background:var(--bg-2);width:70%;height:100vh;padding:2rem;transition:.4s}
+    nav ul.open{right:0}
+    .burger{display:block}
+    .scroll-hint{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <a href="#home" class="logo">&lt;CL<span>/&gt;</span></a>
+  <button class="burger" aria-label="Menu" onclick="document.querySelector('nav ul').classList.toggle('open')">☰</button>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#hobbies">Hobbies</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="home">
+  <canvas id="circuit"></canvas>
+  <div class="hero-text">
+    <div class="hello">⚡ Hello, I'm</div>
+    <h1><span class="accent">Coen Lyte</span></h1>
+    <div class="typed"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
+    <p class="lead">IT student with a Computer Engineering concentration, working toward Electrical Engineering. I like understanding how systems work, from the code down to the copper.</p>
+    <div class="btns">
+      <a href="#contact" class="btn primary">Get in Touch</a>
+      <a href="resume.pdf" class="btn ghost" target="_blank">Download Resume</a> <!-- ✏️ upload resume.pdf to the repo -->
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="chip" id="chip">
+      <div class="ring"></div><div class="ring r2"></div>
+      <div class="core"><span class="initials">CL</span></div> <!-- ✏️ swap for <img src="me.jpg" alt="Coen Lyte"> to use a photo -->
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="mouse"></div>scroll</div>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="alt">
+  <div class="section-title reveal"><h2>About <span>Me</span></h2><div class="bar"></div></div>
+  <div class="about">
+    <div class="reveal">
+      <p>I'm pursuing a B.S. in <strong>Information Technology</strong> at <strong>Clayton State University</strong>, with a concentration in <strong>Computer Engineering</strong>. I started with an Associate's in Computer Science from <strong>Southern Crescent Technical College</strong>.</p>
+      <p>I've been an <strong>Associate Banker at J.P. Morgan Chase</strong> since 2018. In 2026 I was a <strong>Technology Support Intern at the Clayton State University Tech Hub</strong>, where I imaged and deployed Windows machines, joined devices to the domain, repaired hardware, and staffed the help desk. My goal is to become an <strong>Electrical Engineer</strong>. Outside the classroom I do a lot of hands-on work diagnosing and repairing automotive electrical systems, including wiring, sensors, and other components. Tracing a fault back to its source is the part I enjoy most.</p>
+      <p>Away from the bench, I train in <strong>Jiu-Jitsu</strong> and <strong>Muay Thai</strong>, shoot pistol crossbow, and play cricket.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="num" data-count="2">0</div><div class="lbl">Degrees (1 Earned, 1 In Progress)</div></div>
+      <div class="stat"><div class="num" data-count="8" data-suffix="+">0</div><div class="lbl">Years at J.P. Morgan Chase</div></div>
+      <div class="stat"><div class="num" data-count="4">0</div><div class="lbl">Programming Languages</div></div>
+      <div class="stat"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">Curiosity</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education">
+  <div class="section-title reveal"><h2>My <span>Education</span></h2><div class="bar"></div></div>
+  <div class="timeline">
+    <div class="t-item reveal">
+      <div class="t-card">
+        <div class="date">Aug 2021 – Present</div>
+        <h3>Bachelor of Science, Information Technology</h3>
+        <div class="school">Clayton State University</div>
+        <p>Coursework includes Digital Circuits &amp; Computer Design, Embedded Systems, Electronics, Database Design, Networking &amp; Security, and Web Application Development.</p>
+        <span class="tag">Computer Engineering Concentration</span>
+      </div>
+    </div>
+    <div class="t-item reveal">
+      <div class="t-card">
+        <div class="date">Aug 2018 – May 2020</div>
+        <h3>Associate Degree, Computer Science</h3>
+        <div class="school">Southern Crescent Technical College</div>
+        <p>Computer Science I &amp; II, Operating Systems, Foundations of IT, and Data Structures.</p>
+        <span class="tag">Computer Science</span>
+      </div>
+    </div>
+    <div class="t-item reveal">
+      <div class="t-card">
+        <div class="date">Next</div>
+        <h3>Electrical Engineering</h3>
+        <div class="school">The goal ⚡</div>
+        <p>Building on my computer engineering background to move into circuits, power systems, and electronics design.</p>
+        <span class="tag">In Progress</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="alt">
+  <div class="section-title reveal"><h2>Technical <span>Skills</span></h2><div class="bar"></div></div>
+  <div class="skills">
+    <div class="skill-group reveal">
+      <h3>// Programming</h3>
+      <div class="skill"><div class="row"><span>Java</span></div><div class="meter"><i data-w="70"></i></div></div>
+      <div class="skill"><div class="row"><span>Python</span></div><div class="meter"><i data-w="70"></i></div></div>
+      <div class="skill"><div class="row"><span>SQL / MySQL</span></div><div class="meter"><i data-w="65"></i></div></div>
+      <div class="skill"><div class="row"><span>C++</span></div><div class="meter"><i data-w="45"></i></div></div>
+    </div>
+    <div class="skill-group reveal">
+      <h3>// Systems &amp; Support</h3>
+      <div class="skill"><div class="row"><span>Windows 11 Imaging &amp; Deployment</span></div><div class="meter"><i data-w="85"></i></div></div>
+      <div class="skill"><div class="row"><span>Active Directory (Domain Join)</span></div><div class="meter"><i data-w="75"></i></div></div>
+      <div class="skill"><div class="row"><span>Linux / macOS / Windows CLI</span></div><div class="meter"><i data-w="70"></i></div></div>
+      <div class="skill"><div class="row"><span>Hardware &amp; Peripheral Repair</span></div><div class="meter"><i data-w="85"></i></div></div>
+    </div>
+    <div class="skill-group reveal">
+      <h3>// Electrical &amp; Hardware</h3>
+      <div class="skill"><div class="row"><span>Automotive Electrical Repair</span></div><div class="meter"><i data-w="85"></i></div></div>
+      <div class="skill"><div class="row"><span>Digital Circuits &amp; Electronics</span></div><div class="meter"><i data-w="70"></i></div></div>
+      <div class="skill"><div class="row"><span>Embedded Systems / Raspberry Pi</span></div><div class="meter"><i data-w="70"></i></div></div>
+      <div class="skill"><div class="row"><span>Structured Cabling</span></div><div class="meter"><i data-w="75"></i></div></div>
+    </div>
+  </div>
+  <div class="pills reveal" style="justify-content:center;max-width:900px;margin:2.5rem auto 0">
+    <span>Visual Studio</span><span>PyCharm</span><span>Anaconda</span><span>LightBurn</span><span>MySQL</span><span>Microsoft Excel</span><span>Raspberry Pi</span>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE & PROJECTS ================= -->
+<section id="experience">
+  <div class="section-title reveal"><h2>Experience &amp; <span>Projects</span></h2><div class="bar"></div></div>
+  <div class="cards">
+    <div class="card reveal">
+      <div class="icon">🖥️</div>
+      <h3>Technology Support Intern</h3>
+      <div class="meta">Clayton State University Tech Hub · Morrow, GA · Jan – May 2026</div>
+      <ul>
+        <li>Diagnosed and fixed hardware and software faults using CLI and system repair tools</li>
+        <li>Imaged, configured, and deployed Windows laptops and desktops and joined them to the university domain</li>
+        <li>Securely destroyed data on decommissioned drives and kept an Excel audit trail for compliance</li>
+        <li>Staffed the help desk and explained fixes in plain, non-technical language</li>
+        <li>Replaced end-of-life systems and completed structured cable management across campus buildings</li>
+      </ul>
+      <div class="pills"><span>Windows</span><span>Active Directory</span><span>CLI</span><span>Hardware</span><span>Cabling</span></div>
+    </div>
+    <div class="card reveal">
+      <div class="icon">🏦</div>
+      <h3>Associate Banker</h3>
+      <div class="meta">J.P. Morgan Chase · Stockbridge, GA · 2018 – Present</div>
+      <ul>
+        <li>Support customers with daily transactions, including withdrawals and deposits</li>
+        <li>Update, clean, and set up branch banking technology so it runs smoothly</li>
+        <li>Help train new bankers on new technologies</li>
+      </ul>
+      <div class="pills"><span>Customer Service</span><span>Tech Setup</span><span>Training</span></div>
+    </div>
+    <div class="card reveal">
+      <div class="icon">📦</div>
+      <h3>Stocker</h3>
+      <div class="meta">Ingles Supermarket · Stockbridge, GA · Oct 2021 – May 2022</div>
+      <ul>
+        <li>Tracked and counted stock on schedule and recorded it in the inventory database</li>
+        <li>Unpacked and stored deliveries to keep the store organized</li>
+        <li>Removed expired merchandise and reported restocking needs</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title reveal" style="margin-top:5rem"><h2>Academic <span>Projects</span></h2><div class="bar"></div></div>
+  <div class="cards">
+    <div class="card reveal">
+      <div class="icon">🌐</div>
+      <h3>Website Portfolio Design</h3>
+      <div class="meta">May 2022</div>
+      <p>Designed and built a personal portfolio website.</p> <!-- ✏️ add details / link -->
+      <div class="pills"><span>HTML</span><span>CSS</span><span>Web Design</span></div>
+    </div>
+    <div class="card reveal">
+      <div class="icon">🗄️</div>
+      <h3>Customer Search Database</h3>
+      <div class="meta">May 2023</div>
+      <p>Designed a searchable customer database for a fictional company.</p> <!-- ✏️ add details / link -->
+      <div class="pills"><span>SQL</span><span>MySQL</span><span>Database Design</span></div>
+    </div>
+    <div class="card reveal">
+      <div class="icon">🔧</div>
+      <h3>Automotive Electrical Diagnostics</h3>
+      <div class="meta">Hands-on / Personal</div>
+      <p>Diagnoses and repairs vehicle electrical faults, including wiring, alternators, starters, sensors, and lighting.</p>
+      <div class="pills"><span>Multimeter</span><span>OBD-II</span><span>Wiring</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOBBIES ================= -->
+<section id="hobbies" class="alt">
+  <div class="section-title reveal"><h2>Beyond the <span>Code</span></h2><div class="bar"></div></div>
+  <div class="hobbies">
+    <div class="hobby reveal"><div class="hobby-inner">
+      <div class="face front"><div class="emoji">🎯</div><h3>Pistol Crossbow</h3></div>
+      <div class="face back"><h3>Pistol Crossbow</h3><p>Precision, patience, and a steady hand, all of which help at the workbench too.</p></div>
+    </div></div>
+    <div class="hobby reveal"><div class="hobby-inner">
+      <div class="face front"><div class="emoji">🥋</div><h3>Jiu-Jitsu</h3></div>
+      <div class="face back"><h3>Jiu-Jitsu</h3><p>Problem-solving under pressure. Every position has a technical answer.</p></div>
+    </div></div>
+    <div class="hobby reveal"><div class="hobby-inner">
+      <div class="face front"><div class="emoji">🥊</div><h3>Muay Thai</h3></div>
+      <div class="face back"><h3>Muay Thai</h3><p>The art of eight limbs. Builds discipline, conditioning, and grit.</p></div>
+    </div></div>
+    <div class="hobby reveal"><div class="hobby-inner">
+      <div class="face front"><div class="emoji">🚗</div><h3>Car Electrical Repair</h3></div>
+      <div class="face back"><h3>Car Electrical Repair</h3><p>Tracing shorts and bringing dead components back to life. This is where the EE goal started.</p></div>
+    </div></div>
+    <div class="hobby reveal"><div class="hobby-inner">
+      <div class="face front"><div class="emoji">🏏</div><h3>Cricket</h3></div>
+      <div class="face back"><h3>Cricket</h3><p>Strategy, teamwork, and patience over a long game.</p></div>
+    </div></div>
+    <div class="hobby reveal"><div class="hobby-inner">
+      <div class="face front"><div class="emoji">🏀</div><h3>Sports</h3></div>
+      <div class="face back"><h3>Sports</h3><p>Playing and watching. Competition keeps me sharp.</p></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="section-title reveal"><h2>Let's <span>Connect</span></h2><div class="bar"></div></div>
+  <div class="contact reveal">
+    <p>I'm open to internships, entry-level IT roles, and engineering opportunities. Reach out anytime.</p>
+    <a href="mailto:coen.lyte@gmail.com" class="btn primary">✉ coen.lyte@gmail.com</a>
+    <div class="socials">
+      <a href="https://github.com/USERNAME" target="_blank" aria-label="GitHub"> <!-- ✏️ -->
+        <svg viewBox="0 0 24 24"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/coen-lyte" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.6V9h3.5v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>
+      </a>
+      <a href="mailto:coen.lyte@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5-8-5V6l8 5 8-5v2.2z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="yr"></span> Coen Lyte · Built with <span>⚡</span> and hosted on GitHub Pages</footer> <!-- ✏️ -->
+
+<script>
+/* ---------- Typing effect ---------- */
+const phrases=["IT Professional","Computer Engineering Student","Aspiring Electrical Engineer","Automotive Electrical Tinkerer","Martial Artist"];
+let pi=0,ci=0,del=false;const el=document.getElementById('typed');
+(function type(){
+  const p=phrases[pi];
+  el.textContent=p.slice(0,ci);
+  if(!del&&ci<p.length){ci++;setTimeout(type,80)}
+  else if(!del){del=true;setTimeout(type,1600)}
+  else if(ci>0){ci--;setTimeout(type,40)}
+  else{del=false;pi=(pi+1)%phrases.length;setTimeout(type,300)}
+})();
+
+/* ---------- Chip pins ---------- */
+const chip=document.getElementById('chip');
+for(let i=0;i<5;i++){
+  const o=(28+i*11)+'%';
+  [`left:${o};top:14%;width:6px;height:16px;transform:translateX(-50%)`,`left:${o};bottom:14%;width:6px;height:16px;transform:translateX(-50%)`,
+   `top:${o};left:14%;width:16px;height:6px;transform:translateY(-50%)`,`top:${o};right:14%;width:16px;height:6px;transform:translateY(-50%)`]
+  .forEach(st=>{const d=document.createElement('div');d.className='pin';d.style.cssText=st;chip.appendChild(d)});
+}
+
+/* ---------- Circuit background ---------- */
+const cv=document.getElementById('circuit'),cx=cv.getContext('2d');
+let W,H,traces=[],pulses=[];
+function setup(){
+  const hr=document.getElementById('home').getBoundingClientRect();W=cv.width=hr.width;H=cv.height=hr.height;traces=[];pulses=[];
+  const grid=40,n=Math.floor(W*H/22000);
+  for(let i=0;i<n;i++){
+    let x=Math.round(Math.random()*W/grid)*grid,y=Math.round(Math.random()*H/grid)*grid,pts=[[x,y]];
+    for(let s=0;s<3+Math.random()*4;s++){
+      Math.random()<.5?x+=(Math.random()<.5?-1:1)*grid*(1+Math.floor(Math.random()*3)):y+=(Math.random()<.5?-1:1)*grid*(1+Math.floor(Math.random()*3));
+      pts.push([x,y]);
+    }
+    traces.push(pts);
+  }
+  for(let i=0;i<traces.length/2;i++)pulses.push({t:traces[Math.floor(Math.random()*traces.length)],p:Math.random(),v:.002+Math.random()*.004});
+}
+function lenOf(t){let L=0;for(let i=1;i<t.length;i++)L+=Math.hypot(t[i][0]-t[i-1][0],t[i][1]-t[i-1][1]);return L}
+function pointAt(t,f){let L=lenOf(t)*f;for(let i=1;i<t.length;i++){const d=Math.hypot(t[i][0]-t[i-1][0],t[i][1]-t[i-1][1]);
+  if(L<=d){const r=L/d;return[t[i-1][0]+(t[i][0]-t[i-1][0])*r,t[i-1][1]+(t[i][1]-t[i-1][1])*r]}L-=d}return t[t.length-1]}
+function draw(){
+  cx.clearRect(0,0,W,H);
+  cx.strokeStyle='rgba(0,0,0,.13)';cx.lineWidth=1.5;
+  traces.forEach(t=>{cx.beginPath();cx.moveTo(...t[0]);t.forEach(p=>cx.lineTo(...p));cx.stroke();
+    cx.fillStyle='rgba(0,0,0,.25)';cx.beginPath();cx.arc(...t[t.length-1],3,0,7);cx.fill()});
+  pulses.forEach(u=>{u.p+=u.v;if(u.p>1){u.p=0;u.t=traces[Math.floor(Math.random()*traces.length)]}
+    const [x,y]=pointAt(u.t,u.p);const g=cx.createRadialGradient(x,y,0,x,y,8);
+    g.addColorStop(0,'rgba(255,255,255,.95)');g.addColorStop(1,'rgba(255,255,255,0)');
+    cx.fillStyle=g;cx.beginPath();cx.arc(x,y,8,0,7);cx.fill()});
+  requestAnimationFrame(draw);
+}
+setup();draw();addEventListener('resize',setup);
+
+/* ---------- Scroll reveal, skill bars, counters ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  e.target.classList.add('show');
+  e.target.querySelectorAll('.meter i').forEach(b=>b.style.width=b.dataset.w+'%');
+  e.target.querySelectorAll('[data-count]').forEach(c=>{
+    const end=+c.dataset.count,suf=c.dataset.suffix||'';let n=0;const step=Math.max(1,Math.ceil(end/40));
+    const t=setInterval(()=>{n=Math.min(end,n+step);c.textContent=n+suf;if(n>=end)clearInterval(t)},35);
+  });
+  io.unobserve(e.target);
+}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
+
+/* ---------- Progress bar, nav close, tap-to-flip ---------- */
+addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%'});
+document.querySelectorAll('nav ul a').forEach(a=>a.onclick=()=>document.querySelector('nav ul').classList.remove('open'));
+document.querySelectorAll('.hobby').forEach(h=>h.onclick=()=>h.classList.toggle('flip'));
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
