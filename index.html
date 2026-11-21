@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coen Lyte | IT & Aspiring Electrical Engineer</title>
+<meta property="og:image" content="img/headshot.jpg">
 <meta name="description" content="Portfolio of an IT student with a Computer Engineering concentration, aspiring Electrical Engineer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -59,13 +60,16 @@
 
   /* Animated chip / avatar */
   .hero-visual{flex:1;display:flex;justify-content:center}
-  .chip{position:relative;width:300px;height:300px}
+  .chip{position:relative;width:380px;height:380px}
   .chip .core{position:absolute;inset:20%;border-radius:24px;background:linear-gradient(145deg,#232329,#141417);
       border:2px solid #111;display:flex;align-items:center;justify-content:center;
       box-shadow:0 0 40px rgba(0,0,0,.35),inset 0 0 30px rgba(255,122,26,.15);animation:pulse 3s ease-in-out infinite}
   .chip .core .initials{font-family:'Orbitron';font-size:3.4rem;font-weight:900;color:var(--orange)}
   /* Replace the initials with a photo: <img src="me.jpg" alt="..."> */
   .chip .core img{width:100%;height:100%;object-fit:cover;border-radius:22px}
+  .chip .core.photo{inset:17%;border-radius:50%;overflow:hidden;padding:0;border:3px solid #111}
+  .chip .core.photo img{border-radius:50%;transition:transform .6s}
+  .chip:hover .core.photo img{transform:scale(1.06)}
   @keyframes pulse{50%{box-shadow:0 0 70px rgba(255,255,255,.45),inset 0 0 30px rgba(255,122,26,.3)}}
   .pin{position:absolute;background:#111;border-radius:2px;opacity:.8}
   .ring{position:absolute;inset:0;border:2px dashed rgba(0,0,0,.35);border-radius:50%;animation:spin 20s linear infinite}
@@ -287,7 +291,7 @@
   <div class="hero-visual">
     <div class="chip" id="chip">
       <div class="ring"></div><div class="ring r2"></div>
-      <div class="core"><span class="initials">CL</span></div> <!-- ✏️ swap for <img src="me.jpg" alt="Coen Lyte"> to use a photo -->
+      <div class="core photo"><img src="img/headshot.jpg" alt="Coen Lyte headshot"></div>
     </div>
   </div>
   <div class="scroll-hint"><div class="mouse"></div>scroll</div>
