@@ -68,6 +68,8 @@
   .chip:hover .core.photo img{transform:scale(1.06)}
   @keyframes pulse{50%{box-shadow:0 0 70px rgba(255,255,255,.45),inset 0 0 30px rgba(255,122,26,.3)}}
   .pin{position:absolute;background:var(--orange);border-radius:2px;opacity:.8}
+  .ring{position:absolute;inset:0;border:2px dashed rgba(255,122,26,.4);border-radius:50%}
+  .ring.r2{inset:25px;border-style:dotted}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.8rem;
@@ -299,6 +301,7 @@
   </div>
   <div class="hero-visual">
     <div class="chip" id="chip">
+      <div class="ring"></div><div class="ring r2"></div>
       
       <div class="core photo"><img src="img/hero.jpg" alt="Coen Lyte"></div>
     </div>
