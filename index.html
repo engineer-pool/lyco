@@ -85,7 +85,25 @@
   .section-title .bar{width:70px;height:4px;background:var(--orange);margin:.8rem auto 0;border-radius:4px;position:relative;overflow:hidden}
   .section-title .bar::after{content:'';position:absolute;inset:0;width:20px;background:#fff;animation:slide 2s infinite}
   @keyframes slide{from{transform:translateX(-20px)}to{transform:translateX(70px)}}
-  .alt{background:#131316;border-top:1px solid #1f1f24;border-bottom:1px solid #1f1f24}
+  .alt{background:linear-gradient(160deg,#ff8a2a 0%,#ff7a1a 50%,#ef6400 100%);color:#111}
+  .alt .section-title h2{color:#111}
+  .alt .section-title h2 span{color:#fff}
+  .alt .section-title .bar{background:#111}
+  .alt .about p{color:rgba(0,0,0,.82)}
+  .alt .about p strong{color:#000}
+  .alt .stat,.alt .skill-group{box-shadow:0 12px 30px rgba(0,0,0,.28);border-color:#2a2a31;color:var(--text)}
+  .alt .stat:hover{border-color:#111}
+  .alt .pills span{background:#111;color:var(--orange-2)}
+  .alt .about-photo::before{border-color:#111}
+  .alt .filters button{border-color:#111;color:#111}
+  .alt .filters button:hover{background:rgba(0,0,0,.1);color:#111;border-color:#111}
+  .alt .filters button.active{background:#111;color:var(--orange-2);border-color:#111}
+  .alt .contact p{color:rgba(0,0,0,.8)}
+  .alt .btn.primary{background:#111;color:var(--orange-2);border-color:#111}
+  .alt .btn.primary:hover{background:#222;color:#ffb36b;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+  .alt .socials a{border-color:#111}
+  .alt .socials a:hover{background:rgba(0,0,0,.12)}
+  .alt .socials svg{fill:#111}
 
   /* Reveal on scroll */
   .reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
