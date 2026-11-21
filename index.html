@@ -176,6 +176,59 @@
   .socials a:hover{border-color:var(--orange);background:rgba(255,122,26,.12);transform:translateY(-4px) rotate(8deg)}
   .socials svg{width:22px;height:22px;fill:var(--orange)}
 
+
+  /* ---------- Project gallery ---------- */
+  .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin:-1.5rem auto 2.5rem;max-width:900px}
+  .filters button{font:600 .85rem 'Inter',sans-serif;padding:.55rem 1.1rem;border-radius:30px;border:2px solid #111;background:transparent;color:#111;cursor:pointer;transition:.25s}
+  .filters button:hover{background:rgba(0,0,0,.1)}
+  .filters button.active{background:#111;color:var(--orange-2)}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.6rem;max-width:1200px;margin:auto}
+  .proj{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;background:#111;aspect-ratio:4/3;
+        box-shadow:0 14px 34px rgba(0,0,0,.3);transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .4s,box-shadow .3s}
+  .proj:hover{transform:translateY(-8px);box-shadow:0 22px 44px rgba(0,0,0,.4)}
+  .proj.hide{display:none}
+  .proj.pop{animation:popin .5s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes popin{from{opacity:0;transform:scale(.92) translateY(20px)}}
+  .proj img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+  .proj:hover img{transform:scale(1.08)}
+  .proj .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.88) 100%);
+        display:flex;flex-direction:column;justify-content:flex-end;padding:1.3rem;color:#fff}
+  .proj .cat{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange-2)}
+  .proj h3{font-size:1.05rem;margin:.25rem 0 .35rem;line-height:1.3}
+  .proj p{font-size:.82rem;color:#d6d6dc;max-height:0;overflow:hidden;opacity:0;transition:.45s}
+  .proj:hover p,.proj:focus p{max-height:120px;opacity:1}
+  .proj .count{position:absolute;top:.9rem;right:.9rem;background:rgba(17,17,17,.85);color:var(--orange-2);font-size:.75rem;font-weight:700;
+        padding:.3rem .7rem;border-radius:20px;backdrop-filter:blur(4px)}
+  .proj .count.vid{left:.9rem;right:auto;background:var(--orange);color:#111}
+
+  /* Lightbox */
+  .lb{position:fixed;inset:0;z-index:500;background:rgba(8,8,10,.94);display:none;align-items:center;justify-content:center;flex-direction:column;padding:4rem 4.5rem 2rem}
+  .lb.open{display:flex;animation:fadein .3s}
+  @keyframes fadein{from{opacity:0}}
+  .lb-stage{max-width:1100px;width:100%;flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  .lb-stage img,.lb-stage video{max-width:100%;max-height:72vh;border-radius:12px;box-shadow:0 0 0 2px rgba(255,122,26,.4),0 20px 60px rgba(0,0,0,.6);animation:popin .35s}
+  .lb-cap{max-width:800px;text-align:center;margin-top:1.2rem}
+  .lb-cap h3{color:var(--orange);font-size:1.1rem;margin-bottom:.3rem}
+  .lb-cap p{color:#d6d6dc;font-size:.95rem}
+  .lb-cap .n{color:var(--muted);font-size:.8rem;margin-top:.4rem}
+  .lb-dots{display:flex;gap:.4rem;justify-content:center;margin-top:.8rem}
+  .lb-dots i{width:8px;height:8px;border-radius:50%;background:#444;transition:.3s}
+  .lb-dots i.on{background:var(--orange);width:22px;border-radius:5px}
+  .lb button{position:absolute;background:rgba(255,122,26,.15);border:2px solid var(--orange);color:var(--orange);width:50px;height:50px;border-radius:50%;
+        font-size:1.4rem;cursor:pointer;transition:.25s;display:flex;align-items:center;justify-content:center}
+  .lb button:hover{background:var(--orange);color:#111}
+  .lb .x{top:1.2rem;right:1.2rem}
+  .lb .prev{left:1.2rem;top:50%;transform:translateY(-50%)}
+  .lb .next{right:1.2rem;top:50%;transform:translateY(-50%)}
+  @media(max-width:700px){.lb{padding:4rem .8rem 1.5rem}.lb .prev,.lb .next{top:auto;bottom:1rem;transform:none;width:42px;height:42px}.gallery{grid-template-columns:1fr}}
+
+  /* Contact on orange */
+  .alt .contact p{color:rgba(0,0,0,.78)}
+  .alt .contact .btn.primary{background:#111;color:var(--orange-2);border-color:#111}
+  .alt .socials a{border-color:#111}
+  .alt .socials a:hover{background:rgba(0,0,0,.12)}
+  .alt .socials svg{fill:#111}
+
   footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
   footer span{color:var(--orange)}
 
@@ -212,6 +265,7 @@
     <li><a href="#education">Education</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="#hobbies">Hobbies</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -378,18 +432,33 @@
       <p>Designed a searchable customer database for a fictional company.</p> <!-- ✏️ add details / link -->
       <div class="pills"><span>SQL</span><span>MySQL</span><span>Database Design</span></div>
     </div>
-    <div class="card reveal">
-      <div class="icon">🔧</div>
-      <h3>Automotive Electrical Diagnostics</h3>
-      <div class="meta">Hands-on / Personal</div>
-      <p>Diagnoses and repairs vehicle electrical faults, including wiring, alternators, starters, sensors, and lighting.</p>
-      <div class="pills"><span>Multimeter</span><span>OBD-II</span><span>Wiring</span></div>
-    </div>
   </div>
 </section>
 
+<!-- ================= PROJECT GALLERY ================= -->
+<section id="projects" class="alt">
+  <div class="section-title reveal"><h2>Hands-On <span>Projects</span></h2><div class="bar"></div></div>
+  <div class="filters reveal" id="filters">
+    <button class="active" data-f="all">All</button>
+    <button data-f="pc">PC Builds</button>
+    <button data-f="repair">Repairs</button>
+    <button data-f="hub">Tech Hub</button>
+    <button data-f="circuits">Circuits &amp; Embedded</button>
+    <button data-f="auto">Automotive</button>
+  </div>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<div class="lb" id="lb" aria-hidden="true">
+  <button class="x" aria-label="Close">✕</button>
+  <button class="prev" aria-label="Previous">‹</button>
+  <button class="next" aria-label="Next">›</button>
+  <div class="lb-stage" id="lbStage"></div>
+  <div class="lb-cap"><h3 id="lbTitle"></h3><p id="lbText"></p><div class="lb-dots" id="lbDots"></div></div>
+</div>
+
 <!-- ================= HOBBIES ================= -->
-<section id="hobbies" class="alt">
+<section id="hobbies">
   <div class="section-title reveal"><h2>Beyond the <span>Code</span></h2><div class="bar"></div></div>
   <div class="hobbies">
     <div class="hobby reveal"><div class="hobby-inner">
@@ -420,7 +489,7 @@
 </section>
 
 <!-- ================= CONTACT ================= -->
-<section id="contact">
+<section id="contact" class="alt">
   <div class="section-title reveal"><h2>Let's <span>Connect</span></h2><div class="bar"></div></div>
   <div class="contact reveal">
     <p>I'm open to internships, entry-level IT roles, and engineering opportunities. Reach out anytime.</p>
@@ -507,6 +576,108 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
   io.unobserve(e.target);
 }),{threshold:.15});
 document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
+
+
+/* ---------- Project gallery data ---------- */
+const CAT={pc:'PC Build',repair:'Repair',hub:'Tech Hub',circuits:'Circuits & Embedded',auto:'Automotive'};
+const PROJECTS=[
+ {cat:'pc',title:'Custom Gaming PC Build',desc:'Planned, assembled, and cable-managed a full AMD build in a Lian Li case, then installed Windows 11 from USB.',
+  media:[['img/pc-parts.jpg','The parts: Ryzen 5 CPU, ASRock Steel Legend board, PowerColor Reaper 16GB Radeon GPU, Corsair Vengeance DDR5, Samsung 990 Pro NVMe, Corsair RM850e PSU, Thermalright cooler.'],
+         ['img/pc-build.jpg','Mid-build: dual-tower air cooler and GPU mounted, power cables routed before closing up.'],
+         ['img/pc-install.jpg','Installing Windows 11 from a bootable USB.'],
+         ['img/pc-boot.jpg','First successful boot to the desktop.'],
+         ['img/pc-done.jpg','Finished build with RGB lighting.'],
+         ['img/pc-desk.jpg','The finished setup in daily use.']]},
+ {cat:'repair',title:'ASUS TUF Laptop Screen Replacement',desc:'Diagnosed a failed LCD panel on an ASUS TUF Gaming laptop, removed the bezel, and swapped in a replacement panel.',
+  media:[['img/asus-broken.jpg','The problem: a damaged panel showing corrupted lines across the whole display.'],
+         ['img/asus-bezel.jpg','Bezel removed to get at the panel and its display connector.']]},
+ {cat:'repair',title:'Gateway Laptop Revival',desc:'Brought an old Gateway laptop back from multiple boot failures to a working desktop, one error at a time.',
+  media:[['img/gw-cmos.jpg','Error 1: CMOS checksum bad and date/time lost. That points to a dead CMOS battery, so settings had to be reset.'],
+         ['img/gw-registry.jpg','Error 2: Windows would not load because the system registry hive was missing or corrupt (0xc00000e9).'],
+         ['img/gw-rufus.jpg','Error 3: the recovery USB was built UEFI-only, but this laptop boots in legacy BIOS mode. The drive was rebuilt with an MBR/BIOS target.'],
+         ['img/gw-fixed.jpg','Fixed: the laptop boots to the Windows desktop again with the user files intact.']]},
+ {cat:'hub',title:'Secure Data Destruction',desc:'At the Clayton State Tech Hub, physically destroyed decommissioned hard drives and logged each one for data-protection compliance.',
+  media:[['img/hub-drill.jpg','Drilling through the platters of a decommissioned drive on a drill press.'],
+         ['img/hub-drives.jpg','Bins of retired drives waiting for destruction. Each was logged by serial number, manufacturer, capacity and interface.']]},
+ {cat:'hub',title:'Mac Workstation Deployment',desc:'Unboxed, set up, and configured Apple workstations for campus spaces, including user accounts and software.',
+  media:[['img/hub-mac.jpg','Mac workstation configured in an AV control room, setting up users and groups.'],
+         ['img/hub-display.jpg','Unpacking new Apple hardware for deployment.']]},
+ {cat:'circuits',title:'Digital Logic Labs',desc:'Designed and tested digital circuits in Tinkercad and on a physical trainer: flip-flops, BCD decoders, and seven-segment displays.',
+  media:[['img/lab-bcd.jpg','CD4511 BCD-to-seven-segment decoder driven by DIP switches, running at 5 V.'],
+         ['img/lab-jk.jpg','JK flip-flop circuit using a 74HC73 with a clock from a function generator.'],
+         ['img/lab-ttl.jpg','Physical build on a PowerAce trainer with 74LS-series TTL chips driving a seven-segment display.'],
+         ['img/lab-arduino.jpg','Arduino Uno LED circuits designed in Tinkercad.']]},
+ {cat:'circuits',title:'Raspberry Pi Pico in MicroPython',desc:'Programmed a Raspberry Pi Pico to blink an LED in timed patterns using MicroPython.',
+  media:[['video/pico-blink.mp4','The Pico on a breadboard running a MicroPython loop that toggles the LED at changing intervals.','video/pico-blink.jpg']]},
+ {cat:'auto',title:'Sequential LED Side Markers',desc:'Swapped factory amber side markers for LED units, tapping into the existing wiring and testing each mode.',
+  media:[['img/car-marker.jpg','Wiring the new marker into the factory harness, then fitting it into the fender.'],
+         ['video/marker-1.mp4','Testing the turn-signal function.','video/marker-1.jpg'],
+         ['video/marker-2.mp4','Before: the original amber marker.','video/marker-2.jpg'],
+         ['video/marker-3.mp4','After: the new LED marker lit.','video/marker-3.jpg']]},
+ {cat:'auto',title:'Coilover Suspension Install',desc:'Replaced factory struts with height-adjustable coilovers on all four corners.',
+  media:[['img/car-struts-old.jpg','Factory struts and springs removed, with the jack and sockets used for the job.'],
+         ['img/car-coilover.jpg','New adjustable coilover out of the box.'],
+         ['img/car-coilover-on.jpg','Front-left coilover installed and bolted to the knuckle.']]},
+ {cat:'auto',title:'Sway Bar & Chassis Brace',desc:'Installed an upgraded Megan Racing sway bar and lower chassis brace to stiffen handling.',
+  media:[['img/car-swaybar.jpg','New sway bar next to the factory bar it replaced.'],
+         ['img/car-brace.jpg','Chassis brace installed under the car.']]},
+ {cat:'auto',title:'Head Unit & Speaker Upgrade',desc:'Installed a double-DIN touchscreen head unit with navigation and Bluetooth, and replaced blown door speakers.',
+  media:[['img/car-headunit.jpg','Boss double-DIN head unit wired in and running GPS navigation.'],
+         ['img/car-speakers.jpg','The old speakers had torn cones, which is why they were replaced.']]},
+ {cat:'auto',title:'Steering Wheel & Gauge Cluster',desc:'Swapped in a carbon-fiber steering wheel, moving over the steering-wheel control wiring, and pulled the gauge cluster for service.',
+  media:[['img/car-wheel.jpg','Carbon-fiber wheel with the audio controls and connectors transferred.'],
+         ['img/car-cluster.jpg','Instrument cluster removed from the dash.']]}
+];
+
+const gal=document.getElementById('gallery');
+PROJECTS.forEach((p,i)=>{
+  const vids=p.media.filter(m=>m[0].endsWith('.mp4')).length, cover=p.media[0];
+  const src=cover[0].endsWith('.mp4')?cover[2]:cover[0].replace('.jpg','-sm.jpg');
+  const d=document.createElement('div');
+  d.className='proj reveal';d.dataset.cat=p.cat;d.tabIndex=0;
+  d.innerHTML=`<img src="${src}" alt="${p.title}" loading="lazy">
+    ${vids?`<span class="count vid">▶ ${vids} video${vids>1?'s':''}</span>`:''}
+    ${p.media.length-vids?`<span class="count">📷 ${p.media.length-vids}</span>`:''}
+    <div class="shade"><span class="cat">${CAT[p.cat]}</span><h3>${p.title}</h3><p>${p.desc}</p></div>`;
+  d.onclick=()=>openLB(i,0);
+  d.onkeydown=e=>{if(e.key==='Enter')openLB(i,0)};
+  gal.appendChild(d); io.observe(d);
+});
+
+document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  document.querySelectorAll('.proj').forEach(c=>{
+    const show=b.dataset.f==='all'||c.dataset.cat===b.dataset.f;
+    c.classList.toggle('hide',!show);c.classList.remove('pop');
+    if(show){void c.offsetWidth;c.classList.add('pop','show')}
+  });
+});
+
+/* ---------- Lightbox ---------- */
+const lb=document.getElementById('lb'),stage=document.getElementById('lbStage');
+let cp=0,cm=0;
+function openLB(p,m){cp=p;cm=m;lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';render()}
+function closeLB(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';stage.innerHTML=''}
+function render(){
+  const p=PROJECTS[cp],[src,cap,poster]=p.media[cm];
+  stage.innerHTML=src.endsWith('.mp4')
+    ?`<video src="${src}" poster="${poster}" controls autoplay muted loop playsinline></video>`
+    :`<img src="${src}" alt="${cap}">`;
+  document.getElementById('lbTitle').textContent=p.title;
+  document.getElementById('lbText').textContent=cap;
+  document.getElementById('lbDots').innerHTML=p.media.map((_,k)=>`<i class="${k===cm?'on':''}"></i>`).join('');
+  const multi=p.media.length>1;
+  lb.querySelector('.prev').style.display=lb.querySelector('.next').style.display=multi?'':'none';
+}
+function step(d){const n=PROJECTS[cp].media.length;cm=(cm+d+n)%n;render()}
+lb.querySelector('.x').onclick=closeLB;
+lb.querySelector('.prev').onclick=e=>{e.stopPropagation();step(-1)};
+lb.querySelector('.next').onclick=e=>{e.stopPropagation();step(1)};
+lb.onclick=e=>{if(e.target===lb||e.target===stage)closeLB()};
+addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')closeLB();if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+let tx=0;lb.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+lb.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)step(dx<0?1:-1)});
 
 /* ---------- Progress bar, nav close, tap-to-flip ---------- */
 addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%'});
