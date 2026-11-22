@@ -317,7 +317,13 @@
   footer span{color:var(--orange)}
 
   /* Progress bar */
-  #progress{position:fixed;top:0;left:0;height:3px;background:var(--orange);z-index:200;width:0}
+  #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--orange-dark),var(--orange));z-index:200;width:0;
+            box-shadow:0 0 8px rgba(255,122,26,.6)}
+  #car{position:fixed;top:0;left:0;width:46px;height:19px;z-index:201;pointer-events:none;will-change:transform;
+       filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+  #car .wheel{transform-box:fill-box;transform-origin:center}
+  #car.moving .body{animation:rumble .18s ease-in-out infinite alternate}
+  @keyframes rumble{to{transform:translateY(-.6px)}}
 
   /* ---------- Responsive ---------- */
   @media(max-width:900px){
@@ -340,6 +346,19 @@
 </head>
 <body>
 <div id="progress"></div>
+<svg id="car" viewBox="0 0 88 36" aria-hidden="true">
+  <g class="body">
+    <path d="M5 14h11v1.6H5z M7 15.6h1.4v2H7z M13 15.6h1.4v2H13z" fill="#111"/>
+    <path d="M3 25Q3 18 8 17.5L22 15.5 31 6.5Q33 5 37 5H54Q58 5 61 8L68 14.5 82 16.5Q86 17.2 86 21V25Q86 28 83 28H6Q3 28 3 25Z" fill="#ff7a1a" stroke="#111" stroke-width="1.2"/>
+    <path d="M30 14.5 36.5 8H46V14.5Z M49 8H56Q58 8 60 10L64 14.5H49Z" fill="#1b1b20"/>
+    <path d="M68.5 15 70.5 12.5 77 13.4 77 15.8Z" fill="#111"/>
+    <path d="M8 22.5H82" stroke="#111" stroke-width="1.1"/>
+    <rect x="82.5" y="18.2" width="3.5" height="2.2" rx="1" fill="#fff4c2"/>
+    <rect x="3" y="19" width="2.6" height="2.2" rx="1" fill="#e0281e"/>
+  </g>
+  <g class="wheel" id="w1"><circle cx="20" cy="28" r="6.8" fill="#111"/><circle cx="20" cy="28" r="4" fill="#d4a017"/><path d="M20 24.4v7.2M16.4 28h7.2" stroke="#111" stroke-width="1.1"/></g>
+  <g class="wheel" id="w2"><circle cx="70" cy="28" r="6.8" fill="#111"/><circle cx="70" cy="28" r="4" fill="#d4a017"/><path d="M70 24.4v7.2M66.4 28h7.2" stroke="#111" stroke-width="1.1"/></g>
+</svg>
 
 <!-- ================= NAV ================= -->
 <nav>
@@ -889,7 +908,20 @@ let tx=0;lb.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:tr
 lb.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)step(dx<0?1:-1)});
 
 /* ---------- Progress bar, nav close, tap-to-flip ---------- */
-addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%'});
+const bar=document.getElementById('progress'),car=document.getElementById('car'),navEl=document.querySelector('nav'),
+      wheels=[document.getElementById('w1'),document.getElementById('w2')];
+let carStop;
+function drive(){
+  const h=document.documentElement, max=h.scrollHeight-h.clientHeight, f=max>0?h.scrollTop/max:0;
+  const top=navEl.offsetHeight-3;                     // track runs along the bottom edge of the nav
+  bar.style.top=top+'px'; bar.style.width=(f*100)+'%';
+  const cw=46,ch=19;                                  // car size (matches CSS)
+  const x=Math.max(0,f*innerWidth-cw+4);              // car's nose sits at the tip of the bar
+  car.style.transform=`translate(${x}px,${top-ch+5}px)`;
+  const deg=h.scrollTop*1.6; wheels.forEach(w=>w.style.transform=`rotate(${deg}deg)`);
+  car.classList.add('moving'); clearTimeout(carStop); carStop=setTimeout(()=>car.classList.remove('moving'),160);
+}
+addEventListener('scroll',drive,{passive:true}); addEventListener('resize',drive); drive();
 document.querySelectorAll('nav ul a').forEach(a=>a.onclick=()=>document.querySelector('nav ul').classList.remove('open'));
 document.querySelectorAll('.hobby').forEach(h=>h.onclick=()=>h.classList.toggle('flip'));
 document.getElementById('yr').textContent=new Date().getFullYear();
