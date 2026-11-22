@@ -7,7 +7,7 @@
 <meta property="og:image" content="img/hero.jpg">
 <meta name="description" content="Portfolio of an IT student with a Computer Engineering concentration, aspiring Electrical Engineer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --orange:#ff7a1a; --orange-2:#ffa552; --orange-dark:#d65a00;
@@ -18,7 +18,8 @@
   html{scroll-behavior:smooth}
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
-  h1,h2,h3,.logo{font-family:'Orbitron',sans-serif}
+  h1,h2,h3,.logo,.stat .num,.eyebrow{font-family:'Archivo',sans-serif}
+  h1,h2{letter-spacing:-.02em}
 
   /* ---------- Circuit canvas ---------- */
   #circuit{position:absolute;inset:0;z-index:0;pointer-events:none}
@@ -26,8 +27,8 @@
   /* ---------- Nav ---------- */
   nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;
       padding:1rem 6%;background:rgba(13,13,15,.75);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:.3s}
-  .logo{font-size:1.3rem;font-weight:900;color:var(--orange)}
-  .logo span{color:var(--text)}
+  .logo{display:flex;align-items:center;gap:.6rem;font-size:1.05rem;font-weight:800;color:var(--text);letter-spacing:.02em;text-transform:uppercase}
+  .logo .mono{display:grid;place-items:center;width:36px;height:36px;background:var(--orange);color:#111;border-radius:8px;font-weight:900;font-size:.95rem}
   nav ul{display:flex;gap:2rem;list-style:none}
   nav ul a{font-size:.9rem;color:var(--muted);position:relative;transition:.3s}
   nav ul a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--orange);transition:.3s}
@@ -40,16 +41,17 @@
   .hero>*:not(canvas){position:relative;z-index:1}
   .hero .scroll-hint{position:absolute}
   .hero-text{flex:1.3}
-  .hello{color:var(--orange);font-weight:600;letter-spacing:3px;text-transform:uppercase;font-size:.85rem}
-  .hero h1{font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.1;margin:.6rem 0}
+  .hello{color:var(--orange);font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:.8rem;display:flex;align-items:center;gap:.8rem}
+  .hello::before{content:'';width:36px;height:2px;background:var(--orange)}
+  .hero h1{font-size:clamp(3rem,7.5vw,6rem);line-height:.98;margin:.7rem 0 .9rem;font-weight:900;text-transform:uppercase}
   .hero h1 .accent{background:linear-gradient(90deg,var(--orange),var(--orange-2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .typed{font-size:clamp(1.1rem,2.4vw,1.5rem);color:var(--muted);min-height:2.2rem}
-  .typed span{color:#fff;font-weight:600}
+  .typed span{color:#fff;font-weight:700;font-family:'Archivo',sans-serif;letter-spacing:.01em}
   .cursor{display:inline-block;width:3px;background:var(--orange);margin-left:3px;animation:blink 1s infinite}
   @keyframes blink{50%{opacity:0}}
   .hero p.lead{max-width:560px;color:var(--muted);margin:1.2rem 0 2rem}
   .btns{display:flex;gap:1rem;flex-wrap:wrap}
-  .btn{padding:.85rem 1.8rem;border-radius:50px;font-weight:600;transition:.3s;border:2px solid var(--orange)}
+  .btn{padding:.95rem 2rem;border-radius:8px;font-weight:700;letter-spacing:.02em;transition:.3s;border:2px solid var(--orange)}
   .btn.primary{background:var(--orange);color:#111}
   .btn.primary:hover{background:var(--orange-2);transform:translateY(-3px);box-shadow:0 10px 25px rgba(255,122,26,.35)}
   .btn.ghost:hover{background:rgba(255,122,26,.12);transform:translateY(-3px)}
@@ -60,7 +62,7 @@
   .chip .core{position:absolute;inset:20%;border-radius:24px;background:linear-gradient(145deg,#232329,#141417);
       border:2px solid var(--orange);display:flex;align-items:center;justify-content:center;
       box-shadow:0 0 40px rgba(255,122,26,.35),inset 0 0 30px rgba(255,122,26,.15);animation:pulse 3s ease-in-out infinite}
-  .chip .core .initials{font-family:'Orbitron';font-size:3.4rem;font-weight:900;color:var(--orange)}
+  .chip .core .initials{font-family:'Archivo';font-size:3.4rem;font-weight:900;color:var(--orange)}
   /* Replace the initials with a photo: <img src="me.jpg" alt="..."> */
   .chip .core img{width:100%;height:100%;object-fit:cover;border-radius:22px}
   .chip .core.photo{inset:17%;border-radius:50%;overflow:hidden;padding:0;border:3px solid var(--orange)}
@@ -82,11 +84,12 @@
   /* ---------- Sections ---------- */
   section{padding:6rem 6%}
   .section-title{text-align:center;margin-bottom:3.5rem}
-  .section-title h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+  .section-title h2{font-size:clamp(2.1rem,4.6vw,3.2rem);font-weight:900;text-transform:uppercase;line-height:1.05}
+  .eyebrow{display:block;font-size:.8rem;font-weight:800;letter-spacing:4px;color:var(--orange);margin-bottom:.6rem}
+  .alt .eyebrow{color:#111}
   .section-title h2 span{color:var(--orange)}
   .section-title .bar{width:70px;height:4px;background:var(--orange);margin:.8rem auto 0;border-radius:4px;position:relative;overflow:hidden}
-  .section-title .bar::after{content:'';position:absolute;inset:0;width:20px;background:#fff;animation:slide 2s infinite}
-  @keyframes slide{from{transform:translateX(-20px)}to{transform:translateX(70px)}}
+    @keyframes slide{from{transform:translateX(-20px)}to{transform:translateX(70px)}}
   .alt{background:linear-gradient(160deg,#ff8a2a 0%,#ff7a1a 50%,#ef6400 100%);color:#111}
   .alt .section-title h2{color:#111}
   .alt .section-title h2 span{color:#fff}
@@ -127,7 +130,7 @@
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.5rem;text-align:center;transition:.3s}
   .stat:hover{border-color:var(--orange);transform:translateY(-5px)}
-  .stat .num{font-family:'Orbitron';font-size:2rem;color:var(--orange);font-weight:700}
+  .stat .num{font-size:2.4rem;color:var(--orange);font-weight:900;line-height:1.1}
   .stat .lbl{font-size:.85rem;color:var(--muted)}
 
   /* ---------- Education timeline ---------- */
@@ -163,7 +166,8 @@
   .card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:.4s}
   .card:hover{transform:translateY(-8px);border-color:rgba(255,122,26,.5)}
   .card:hover::before{transform:scaleX(1)}
-  .card .icon{font-size:2rem;margin-bottom:1rem}
+  .card .icon{width:48px;height:48px;display:grid;place-items:center;border-radius:10px;background:rgba(255,122,26,.12);color:var(--orange);margin-bottom:1.1rem}
+  .ico{width:24px;height:24px}
   .card h3{font-size:1.1rem;margin-bottom:.3rem}
   .card .meta{color:var(--orange-2);font-size:.85rem;margin-bottom:.8rem}
   .card p,.card li{color:var(--muted);font-size:.92rem}
@@ -179,9 +183,8 @@
   .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;
         align-items:center;justify-content:center;padding:1.4rem;text-align:center;border:1px solid var(--line)}
   .front{background:var(--card)}
-  .front .emoji{font-size:3rem;margin-bottom:.8rem;animation:bob 3s ease-in-out infinite}
-  .hobby:nth-child(2n) .emoji{animation-delay:.5s} .hobby:nth-child(3n) .emoji{animation-delay:1s}
-  @keyframes bob{50%{transform:translateY(-8px)}}
+  .front .emoji{width:64px;height:64px;display:grid;place-items:center;border-radius:14px;background:rgba(255,122,26,.12);color:var(--orange);margin-bottom:1rem}
+  .front .emoji .ico{width:32px;height:32px}
   .front h3{font-size:.95rem}
   .back{background:linear-gradient(145deg,var(--orange),var(--orange-dark));color:#111;transform:rotateY(180deg)}
   .back h3{font-size:.95rem;margin-bottom:.5rem}
@@ -254,6 +257,7 @@
   @media(max-width:900px){
     .hero{flex-direction:column-reverse;justify-content:center;text-align:center;padding-top:6rem}
     .hero p.lead{margin-inline:auto} .btns{justify-content:center}
+    .hello{justify-content:center}
     .chip{width:220px;height:220px}
     .about{grid-template-columns:1fr}
     .hobbies{grid-template-columns:repeat(2,1fr)}
@@ -273,7 +277,7 @@
 
 <!-- ================= NAV ================= -->
 <nav>
-  <a href="#home" class="logo">&lt;CL<span>/&gt;</span></a>
+  <a href="#home" class="logo"><span class="mono">CL</span>Coen Lyte</a>
   <button class="burger" aria-label="Menu" onclick="document.querySelector('nav ul').classList.toggle('open')">☰</button>
   <ul>
     <li><a href="#about">About</a></li>
@@ -290,7 +294,7 @@
 <header class="hero" id="home">
   <canvas id="circuit"></canvas>
   <div class="hero-text">
-    <div class="hello">⚡ Hello, I'm</div>
+    <div class="hello">Hello, I'm</div>
     <h1><span class="accent">Coen Lyte</span></h1>
     <div class="typed"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
     <p class="lead">IT student with a Computer Engineering concentration, working toward Electrical Engineering. I like understanding how systems work, from the code down to the copper.</p>
@@ -311,7 +315,7 @@
 
 <!-- ================= ABOUT ================= -->
 <section id="about" class="alt">
-  <div class="section-title reveal"><h2>About <span>Me</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal"><span class="eyebrow">01 / ABOUT</span><h2>About <span>Me</span></h2><div class="bar"></div></div>
   <div class="about">
     <div class="reveal">
       <p>I'm pursuing a B.S. in <strong>Information Technology</strong> at <strong>Clayton State University</strong>, with a concentration in <strong>Computer Engineering</strong>. I started with an Associate's in Computer Science from <strong>Southern Crescent Technical College</strong>.</p>
@@ -324,7 +328,7 @@
       <div class="stat"><div class="num" data-count="2">0</div><div class="lbl">Degrees (1 Earned, 1 In Progress)</div></div>
       <div class="stat"><div class="num" data-count="8" data-suffix="+">0</div><div class="lbl">Years at J.P. Morgan Chase</div></div>
       <div class="stat"><div class="num" data-count="4">0</div><div class="lbl">Programming Languages</div></div>
-      <div class="stat"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">Curiosity</div></div>
+      <div class="stat"><div class="num" data-count="12">0</div><div class="lbl">Hands-On Projects</div></div>
     </div>
     </div>
   </div>
@@ -332,7 +336,7 @@
 
 <!-- ================= EDUCATION ================= -->
 <section id="education">
-  <div class="section-title reveal"><h2>My <span>Education</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal"><span class="eyebrow">02 / EDUCATION</span><h2>My <span>Education</span></h2><div class="bar"></div></div>
   <div class="timeline">
     <div class="t-item reveal">
       <div class="t-card">
@@ -356,7 +360,7 @@
       <div class="t-card">
         <div class="date">Next</div>
         <h3>Electrical Engineering</h3>
-        <div class="school">The goal ⚡</div>
+        <div class="school">Career goal</div>
         <p>Building on my computer engineering background to move into circuits, power systems, and electronics design.</p>
         <span class="tag">In Progress</span>
       </div>
@@ -366,7 +370,7 @@
 
 <!-- ================= SKILLS ================= -->
 <section id="skills" class="alt">
-  <div class="section-title reveal"><h2>Technical <span>Skills</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal"><span class="eyebrow">03 / SKILLS</span><h2>Technical <span>Skills</span></h2><div class="bar"></div></div>
   <div class="skills">
     <div class="skill-group reveal">
       <h3>// Programming</h3>
@@ -397,10 +401,10 @@
 
 <!-- ================= EXPERIENCE & PROJECTS ================= -->
 <section id="experience">
-  <div class="section-title reveal"><h2>Experience &amp; <span>Projects</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal"><span class="eyebrow">04 / EXPERIENCE</span><h2>Work <span>Experience</span></h2><div class="bar"></div></div>
   <div class="cards">
     <div class="card reveal">
-      <div class="icon">🖥️</div>
+      <div class="icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
       <h3>Technology Support Intern</h3>
       <div class="meta">Clayton State University Tech Hub · Morrow, GA · Jan – May 2026</div>
       <ul>
@@ -413,7 +417,7 @@
       <div class="pills"><span>Windows</span><span>Active Directory</span><span>CLI</span><span>Hardware</span><span>Cabling</span></div>
     </div>
     <div class="card reveal">
-      <div class="icon">🏦</div>
+      <div class="icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M4 10h16M12 3 3 8h18l-9-5zM6 10v8M10 10v8M14 10v8M18 10v8"/></svg></div>
       <h3>Associate Banker</h3>
       <div class="meta">J.P. Morgan Chase · Stockbridge, GA · 2018 – Present</div>
       <ul>
@@ -424,7 +428,7 @@
       <div class="pills"><span>Customer Service</span><span>Tech Setup</span><span>Training</span></div>
     </div>
     <div class="card reveal">
-      <div class="icon">📦</div>
+      <div class="icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></div>
       <h3>Stocker</h3>
       <div class="meta">Ingles Supermarket · Stockbridge, GA · Oct 2021 – May 2022</div>
       <ul>
@@ -435,17 +439,17 @@
     </div>
   </div>
 
-  <div class="section-title reveal" style="margin-top:5rem"><h2>Academic <span>Projects</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal" style="margin-top:5rem"><span class="eyebrow">05 / COURSEWORK</span><h2>Academic <span>Projects</span></h2><div class="bar"></div></div>
   <div class="cards">
     <div class="card reveal">
-      <div class="icon">🌐</div>
+      <div class="icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
       <h3>Website Portfolio Design</h3>
       <div class="meta">May 2022</div>
       <p>Designed and built a personal portfolio website.</p> <!-- ✏️ add details / link -->
       <div class="pills"><span>HTML</span><span>CSS</span><span>Web Design</span></div>
     </div>
     <div class="card reveal">
-      <div class="icon">🗄️</div>
+      <div class="icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
       <h3>Customer Search Database</h3>
       <div class="meta">May 2023</div>
       <p>Designed a searchable customer database for a fictional company.</p> <!-- ✏️ add details / link -->
@@ -456,7 +460,7 @@
 
 <!-- ================= PROJECT GALLERY ================= -->
 <section id="projects" class="alt">
-  <div class="section-title reveal"><h2>Hands-On <span>Projects</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal"><span class="eyebrow">06 / PORTFOLIO</span><h2>Hands-On <span>Projects</span></h2><div class="bar"></div></div>
   <div class="filters reveal" id="filters">
     <button class="active" data-f="all">All</button>
     <button data-f="pc">PC Builds</button>
@@ -478,30 +482,30 @@
 
 <!-- ================= HOBBIES ================= -->
 <section id="hobbies">
-  <div class="section-title reveal"><h2>Beyond the <span>Code</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal"><span class="eyebrow">07 / PERSONAL</span><h2>Beyond the <span>Code</span></h2><div class="bar"></div></div>
   <div class="hobbies">
     <div class="hobby reveal"><div class="hobby-inner">
-      <div class="face front"><div class="emoji">🎯</div><h3>Pistol Crossbow</h3></div>
+      <div class="face front"><div class="emoji"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 1v5M12 18v5M1 12h5M18 12h5"/></svg></div><h3>Pistol Crossbow</h3></div>
       <div class="face back"><h3>Pistol Crossbow</h3><p>Precision, patience, and a steady hand, all of which help at the workbench too.</p></div>
     </div></div>
     <div class="hobby reveal"><div class="hobby-inner">
-      <div class="face front"><div class="emoji">🥋</div><h3>Jiu-Jitsu</h3></div>
+      <div class="face front"><div class="emoji"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Jiu-Jitsu</h3></div>
       <div class="face back"><h3>Jiu-Jitsu</h3><p>Problem-solving under pressure. Every position has a technical answer.</p></div>
     </div></div>
     <div class="hobby reveal"><div class="hobby-inner">
-      <div class="face front"><div class="emoji">🥊</div><h3>Muay Thai</h3></div>
+      <div class="face front"><div class="emoji"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4 0 7-3 7-7 0-5-4-7-5-12-2 2-3 4-3 6-1-1-2-2-2-4-2 2-4 5-4 10 0 4 3 7 7 7z"/></svg></div><h3>Muay Thai</h3></div>
       <div class="face back"><h3>Muay Thai</h3><p>The art of eight limbs. Builds discipline, conditioning, and grit.</p></div>
     </div></div>
     <div class="hobby reveal"><div class="hobby-inner">
-      <div class="face front"><div class="emoji">🚗</div><h3>Car Electrical Repair</h3></div>
+      <div class="face front"><div class="emoji"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></div><h3>Car Electrical Repair</h3></div>
       <div class="face back"><h3>Car Electrical Repair</h3><p>Tracing shorts and bringing dead components back to life. This is where the EE goal started.</p></div>
     </div></div>
     <div class="hobby reveal"><div class="hobby-inner">
-      <div class="face front"><div class="emoji">🏏</div><h3>Cricket</h3></div>
+      <div class="face front"><div class="emoji"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 4.5c2 2.2 2 12.8 0 15M16 4.5c-2 2.2-2 12.8 0 15"/></svg></div><h3>Cricket</h3></div>
       <div class="face back"><h3>Cricket</h3><p>Strategy, teamwork, and patience over a long game.</p></div>
     </div></div>
     <div class="hobby reveal"><div class="hobby-inner">
-      <div class="face front"><div class="emoji">🏀</div><h3>Sports</h3></div>
+      <div class="face front"><div class="emoji"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></div><h3>Sports</h3></div>
       <div class="face back"><h3>Sports</h3><p>Playing and watching. Competition keeps me sharp.</p></div>
     </div></div>
   </div>
@@ -509,10 +513,10 @@
 
 <!-- ================= CONTACT ================= -->
 <section id="contact" class="alt">
-  <div class="section-title reveal"><h2>Let's <span>Connect</span></h2><div class="bar"></div></div>
+  <div class="section-title reveal"><span class="eyebrow">08 / CONTACT</span><h2>Let's <span>Connect</span></h2><div class="bar"></div></div>
   <div class="contact reveal">
     <p>I'm open to internships, entry-level IT roles, and engineering opportunities. Reach out anytime.</p>
-    <a href="mailto:coen.lyte@gmail.com" class="btn primary">✉ coen.lyte@gmail.com</a>
+    <a href="mailto:coen.lyte@gmail.com" class="btn primary" style="display:inline-flex;align-items:center;gap:.6rem"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg>coen.lyte@gmail.com</a>
     <div class="socials">
       <a href="https://github.com/USERNAME" target="_blank" aria-label="GitHub"> <!-- ✏️ -->
         <svg viewBox="0 0 24 24"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
@@ -527,7 +531,7 @@
   </div>
 </section>
 
-<footer>© <span id="yr"></span> Coen Lyte · Built with <span>⚡</span> and hosted on GitHub Pages</footer> <!-- ✏️ -->
+<footer>© <span id="yr"></span> Coen Lyte · Information Technology &amp; Computer Engineering</footer> <!-- ✏️ -->
 
 <script>
 /* ---------- Typing effect ---------- */
@@ -656,7 +660,7 @@ PROJECTS.forEach((p,i)=>{
   d.className='proj reveal';d.dataset.cat=p.cat;d.tabIndex=0;
   d.innerHTML=`<img src="${src}" alt="${p.title}" loading="lazy">
     ${vids?`<span class="count vid">▶ ${vids} video${vids>1?'s':''}</span>`:''}
-    ${p.media.length-vids?`<span class="count">📷 ${p.media.length-vids}</span>`:''}
+    ${p.media.length-vids?`<span class="count"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px;margin-right:4px"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg>${p.media.length-vids}</span>`:''}
     <div class="shade"><span class="cat">${CAT[p.cat]}</span><h3>${p.title}</h3><p>${p.desc}</p></div>`;
   d.onclick=()=>openLB(i,0);
   d.onkeydown=e=>{if(e.key==='Enter')openLB(i,0)};
