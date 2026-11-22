@@ -282,6 +282,13 @@
   .toolbelt{text-align:center;margin-top:2.2rem;font-size:.95rem;color:rgba(0,0,0,.82)}
   .toolbelt strong{color:#000}
 
+  .strengths{max-width:1150px;margin:2.2rem auto 0;background:#111;border-radius:14px;padding:1.8rem 2rem;color:var(--text);box-shadow:0 12px 30px rgba(0,0,0,.28)}
+  .strengths h3{font-size:1.08rem;color:var(--orange);margin-bottom:1.1rem;text-transform:uppercase;letter-spacing:.06em}
+  .strengths ul{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem 2rem}
+  .strengths li{border-left:3px solid var(--orange);padding-left:.9rem}
+  .strengths li strong{display:block;font-size:.98rem}
+  .strengths li span{color:var(--muted);font-size:.86rem}
+  @media(max-width:900px){.strengths ul{grid-template-columns:1fr}}
   /* ---------- Case studies ---------- */
   .cases{display:flex;flex-direction:column;gap:2.2rem;max-width:1150px;margin:auto}
   .case{display:grid;grid-template-columns:1fr 1.25fr;background:var(--card);border-radius:18px;overflow:hidden;
@@ -357,7 +364,7 @@
     <div class="hello">Hello, I'm</div>
     <h1><span class="accent">Coen Lyte</span></h1>
     <div class="typed"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
-    <p class="lead">IT student with a Computer Engineering concentration who deploys, troubleshoots and secures the hardware organizations run on. I bring eight years of client-facing experience at J.P.&nbsp;Morgan Chase and I'm building toward Electrical Engineering.</p>
+    <p class="lead">IT student with a Computer Engineering concentration who deploys, troubleshoots and secures the hardware organizations run on. I pair that with eight years of building client trust and training teammates at J.P.&nbsp;Morgan Chase, and I'm building toward Electrical Engineering.</p>
     <div class="btns">
       <a href="#case-studies" class="btn primary">View My Work <svg class="ico btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <a href="resume.pdf" class="btn ghost" target="_blank" rel="noopener">Resume <svg class="ico btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a>
@@ -470,6 +477,17 @@
       <div class="pills"><span>Help Desk</span><span>Technical Training</span><span>Client Service</span><span>Documentation</span></div>
     </article>
   </div>
+  <div class="strengths reveal">
+    <h3>Professional Strengths</h3>
+    <ul>
+      <li><strong>Client Relationships</strong><span>Eight years earning the trust of bank clients</span></li>
+      <li><strong>Clear Communication</strong><span>Explains technical fixes in plain language</span></li>
+      <li><strong>Training &amp; Mentoring</strong><span>Brings new team members up to speed</span></li>
+      <li><strong>Teamwork</strong><span>Keeps service smooth for coworkers and customers</span></li>
+      <li><strong>Dependability</strong><span>8-year tenure at J.P. Morgan Chase</span></li>
+      <li><strong>Attention to Detail</strong><span>Accurate, compliance-driven work</span></li>
+    </ul>
+  </div>
   <p class="toolbelt reveal"><strong>Toolbelt:</strong> Visual Studio · PyCharm · Anaconda · Git &amp; GitHub Pages · Rufus · LightBurn · Microsoft Excel</p>
 </section>
 
@@ -495,11 +513,12 @@
       <h3>Associate Banker</h3>
       <div class="meta">J.P. Morgan Chase · Stockbridge, GA · 2018 – Present</div>
       <ul>
-        <li>Support customers with daily transactions, including withdrawals and deposits</li>
-        <li>Update, clean, and set up branch banking technology so it runs smoothly</li>
-        <li>Help train new bankers on new technologies</li>
+        <li>Build lasting client relationships over eight years, earning trust through accuracy and strict compliance and security procedures</li>
+        <li>Train and mentor new bankers on branch systems and technology rollouts; the team's go-to person for tech questions</li>
+        <li>Keep branch technology running so customers and coworkers are never held up, even during busy periods</li>
+        <li>Explain banking products and digital tools in plain language for customers of every comfort level</li>
       </ul>
-      <div class="pills"><span>Customer Service</span><span>Tech Setup</span><span>Training</span></div>
+      <div class="pills"><span>Relationship Building</span><span>Mentoring</span><span>Communication</span><span>Compliance</span></div>
     </div>
     <div class="card reveal">
       <div class="icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></div>
