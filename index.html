@@ -289,6 +289,23 @@
   .strengths li strong{display:block;font-size:.98rem}
   .strengths li span{color:var(--muted);font-size:.86rem}
   @media(max-width:900px){.strengths ul{grid-template-columns:1fr}}
+  /* ---------- Muay Thai feature ---------- */
+  .mt-feature{display:grid;grid-template-columns:.9fr 1.2fr .75fr;gap:2rem;align-items:center;max-width:1150px;margin:0 auto 3rem;
+              background:#111;border-radius:18px;padding:1.6rem;box-shadow:0 18px 44px rgba(0,0,0,.35);color:var(--text)}
+  .mt-feature figure{margin:0;position:relative;border-radius:12px;overflow:hidden}
+  .mt-feature img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+  .mt-feature figure:hover img{transform:scale(1.05)}
+  .mt-poster{aspect-ratio:9/16;border:2px solid var(--orange)}
+  .mt-photo{aspect-ratio:2/5;max-height:520px}
+  .mt-photo figcaption{position:absolute;left:.7rem;bottom:.7rem;background:rgba(17,17,17,.85);color:var(--orange-2);font-size:.72rem;font-weight:700;padding:.3rem .6rem;border-radius:6px}
+  .mt-tag{font-size:.72rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange)}
+  .mt-copy h3{font-size:2rem;font-weight:900;text-transform:uppercase;margin:.3rem 0 .8rem}
+  .mt-copy p{color:#c9c9d1;margin-bottom:1.3rem}
+  .mt-points{list-style:none;display:grid;gap:.8rem}
+  .mt-points li{border-left:3px solid var(--orange);padding-left:.8rem}
+  .mt-points strong{display:block}
+  .mt-points span{color:var(--muted);font-size:.86rem}
+  @media(max-width:900px){.mt-feature{grid-template-columns:1fr 1fr}.mt-copy{grid-column:1/-1;order:-1}.mt-photo{aspect-ratio:9/16;max-height:none}}
   /* ---------- Case studies ---------- */
   .cases{display:flex;flex-direction:column;gap:2.2rem;max-width:1150px;margin:auto}
   .case{display:grid;grid-template-columns:1fr 1.25fr;background:var(--card);border-radius:18px;overflow:hidden;
@@ -691,6 +708,20 @@
 <!-- ================= HOBBIES ================= -->
 <section id="hobbies" class="alt">
   <div class="section-title reveal"><span class="eyebrow">08 / PERSONAL</span><h2>Beyond the <span>Code</span></h2><div class="bar"></div></div>
+  <div class="mt-feature reveal">
+    <figure class="mt-poster"><img src="img/muaythai-poster.jpg" alt="Illustrated poster of Coen Lyte in Muay Thai shorts and hand wraps" loading="lazy"></figure>
+    <div class="mt-copy">
+      <span class="mt-tag">On the mats</span>
+      <h3>Muay Thai</h3>
+      <p>Coen trains in Muay Thai, the "art of eight limbs." The discipline carries over to his work: showing up consistently, staying calm under pressure, and working a problem until it's solved.</p>
+      <ul class="mt-points">
+        <li><strong>Discipline</strong><span>Regular training and conditioning</span></li>
+        <li><strong>Composure</strong><span>Clear thinking under pressure</span></li>
+        <li><strong>Teamwork</strong><span>Training partners push each other</span></li>
+      </ul>
+    </div>
+    <figure class="mt-photo"><img src="img/muaythai-training.jpg" alt="Coen Lyte at Muay Thai training" loading="lazy"><figcaption>Class at the gym</figcaption></figure>
+  </div>
   <div class="hobbies">
     <div class="hobby reveal"><div class="hobby-inner">
       <div class="face front"><div class="emoji"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 1v5M12 18v5M1 12h5M18 12h5"/></svg></div><h3>Pistol Crossbow</h3></div>
